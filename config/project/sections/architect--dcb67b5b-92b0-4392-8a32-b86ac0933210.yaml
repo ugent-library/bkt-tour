@@ -1,0 +1,19 @@
+enableVersioning: true
+handle: architect
+name: Architect
+propagationMethod: siteGroup
+siteSettings:
+  4a80df2d-c2b9-46bf-94f7-eecc714b2b62: # Nederlands
+    enabledByDefault: true
+    hasUrls: true
+    template: architect/_entry
+    uriFormat: 'architect/{slug}'
+  81d10473-13e6-46a6-acd3-0fd9c7ab3729: # English
+    enabledByDefault: true
+    hasUrls: true
+    template: architect/_entry
+    uriFormat: 'architect/{slug}'
+structure:
+  maxLevels: null
+  uid: e75eed2c-2d68-4ed3-a3cc-66cb432e1a6d
+type: structure

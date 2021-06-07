@@ -1,0 +1,98 @@
+{% extends "_layout" %}
+
+{% set featureImage = {
+  mode: 'crop',
+  width: 300,
+  height: 200,
+  quality: 90
+} %}
+
+
+{% set nextSiblingQuery = craft.entries()
+    .section('room')
+    .nextSiblingOf(entry)
+    .limit(1) %}
+
+{% set prevSiblingQuery = craft.entries()
+    .section('room')
+    .prevSiblingOf(entry)
+    .limit(1) %}
+
+{% set nextSiblings = nextSiblingQuery.all() %}
+{% set prevSiblings = prevSiblingQuery.all() %}
+
+{% set prevSibsCount = craft.entries.positionedBefore(entry).total() %}
+{% set position = prevSibsCount + 1 %}
+
+{% block content %}
+  <div clas="container">
+    <div class="row mb-2">
+      <div class="col-6">
+        {% if entry.mainImage|length %}
+          <ul class="list-unstyled">
+          {% for image in entry.mainImage.all() %}
+              <li class="list-inline-item">
+                <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+              </li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <div class="col-6">
+        <h1 class="text-4xl text-black font-display my-4"><span class="badge bg-secondary">{{ position }}</span> {{ entry.subtitle }}</h1>
+
+        <p>{{ entry.subtitle }}</p>
+
+        <p>{{ entry.bodyContent }}</p>
+      </div>
+    </div>
+
+    <div class="row bg-light mb-2">
+      {% if entry.images|length %}
+      <div class="row">
+        <ul class="list-unstyled">
+        {% for image in entry.images.all() %}
+            <li class="list-inline-item">
+              <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+            </li>
+        {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+
+    {% if entry.relatedItems|length %}
+    <div class="row">
+
+      <h2>{{ 'Related articles'|t }}</h2>
+
+      <ul class="list-unstyled">
+        {% for item in entry.relatedItems %}
+          {% if item.mainImage|length %}
+            {% for image in item.mainImage.all() %}
+                <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+            {% endfor %}
+          {% endif %}
+          <p><small>{{ 'Architects'|t }}</small></p>
+          <p><a href="{{ item.url }}">{{ item.title }}</a></p>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+  </div>
+
+{# Display the entries #}
+  <div class="row">
+  {% for entry in nextSiblings %}
+     <p><a href="{{ entry.url }}">{{ entry.title }} &raquo;</a></p>
+  {% endfor %}
+  {% for entry in prevSiblings %}
+     <p><a href="{{ entry.url }}">&laquo; {{ entry.title }}</a></p>
+  {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
+

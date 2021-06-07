@@ -1,0 +1,151 @@
+{# http://craftsnippets.com/articles/universal-language-switcher-for-craft-cms #}
+{% set currentElement = craft.app.urlManager.matchedElement %}
+{% set sites = craft.app.getSites().getGroupById(currentSite.groupId).getSites() %}
+{% set switcherLinks = [] %}
+
+{% for site in sites if site.baseUrl is not empty %}
+
+    {% set title = craft.app.i18n.getLocaleById(site.language).nativeName %}
+    {% set url = site.getBaseUrl() %}
+    {% if currentElement %}
+        {% set otherLocaleElement = craft.app.getElements().getElementById(currentElement.id, currentElement.className(), site.id) %}
+        {% if otherLocaleElement and otherLocaleElement.enabledForSite %}
+            {% set url = otherLocaleElement.url %}
+        {% endif %}
+    {% endif %}
+
+    {% set switcherLinks = switcherLinks|merge([{
+        url: url,
+        title: title,
+        countryCode: site.language|split('-')|last,
+        current: site.id == currentSite.id ? true : false,
+        language: site.language,
+    }]) %}
+
+{% endfor %}
+
+{% set roomsQuery = craft.entries()
+    .section('room') %}
+{% set rooms = roomsQuery.all() %}
+{% set roomLinks = [] %}
+
+{% for room in rooms %}
+    {% set rprevSibsCount = craft.entries.positionedBefore(room).total() %}
+    {% set rposition = rprevSibsCount + 1 %}
+
+    {% set roomLinks = roomLinks|merge([{
+      position: rposition,
+      room: room
+    }]) %}
+{% endfor %}
+
+{% set singlesLinks = [] %}
+{% set sections = craft.sections.getAllSections() %}
+{% for singleSection in sections if singleSection.type == 'single' %}
+    {% set singleEntry = craft.entries.sectionId(singleSection.id).first %}
+
+    {% if singleEntry.url != '__home__' %}
+      {% set singlesLinks = singlesLinks|merge([{
+        url: singleEntry.url,
+        title: singleEntry.title
+      }]) %}
+    {% endif %}
+
+{% endfor %}
+
+
+<!DOCTYPE html>
+<html lang="{{ craft.app.language }}">
+  <head>
+    <meta charset="utf-8"/>
+    <title>{{ siteName }}</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+  </head>
+  <body class="ltr">
+    <div class="container mx-auto px-4">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Tour Boekentoren</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/{{ craft.app.language }}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#languageModal">{{ 'Languages'|t }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#contentsModal">{{ 'Index of contents'|t }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{ 'Map'|t }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Language Modal -->
+      <div class="modal fade" id="languageModal" tabindex="-1" aria-labelledby="languageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="languageModalLabel">{{ 'Languages'|t }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <ul>
+              {% for switcherLink in switcherLinks %}
+                <li class="{{switcherLink.current ? 'is-active'}}">
+                  <a href="{{switcherLink.url}}" hreflang="{{switcherLink.language}}" lang="{{switcherLink.language}}">
+                    <span>{{ switcherLink.title }}</span>
+                    </a>
+                </li>
+              {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Index of Contents Modal -->
+      <div class="modal fade" id="contentsModal" tabindex="-1" aria-labelledby="contentsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="contentsModalLabel">{{ 'Index of contents'|t }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <ul class="list-unstyled">
+              {% for link in singlesLinks %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+              </ul>
+
+
+              <h5>{{ 'Rooms'|t }}</h5>
+              <ul class="list-unstyled">
+              {% for link in roomLinks %}
+                <li><span class="badge bg-secondary">{{ link.position }}</span> <a href="{{ link.room.url }}">{{ link.room.title }}</a></li>
+              {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
+

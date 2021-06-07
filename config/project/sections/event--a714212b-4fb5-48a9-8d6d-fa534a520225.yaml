@@ -1,0 +1,19 @@
+enableVersioning: true
+handle: event
+name: Event
+propagationMethod: siteGroup
+siteSettings:
+  4a80df2d-c2b9-46bf-94f7-eecc714b2b62: # Nederlands
+    enabledByDefault: true
+    hasUrls: true
+    template: event/_entry
+    uriFormat: 'evenement/{slug}'
+  81d10473-13e6-46a6-acd3-0fd9c7ab3729: # English
+    enabledByDefault: true
+    hasUrls: true
+    template: event/_entry
+    uriFormat: 'event/{slug}'
+structure:
+  maxLevels: null
+  uid: afb1fc45-55ff-41a5-92e9-a372216c721b
+type: structure

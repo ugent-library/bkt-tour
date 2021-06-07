@@ -1,0 +1,6 @@
+siteUid: 4a80df2d-c2b9-46bf-94f7-eecc714b2b62 # Nederlands
+sortOrder: 1
+template: art/_index
+uriParts:
+  - kunst
+uriPattern: kunst

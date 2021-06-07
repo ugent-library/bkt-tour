@@ -1,0 +1,9 @@
+baseUrl: '@web/en/'
+enabled: true
+handle: english
+hasUrls: true
+language: en
+name: English
+primary: false
+siteGroup: 529697e9-09db-4e71-8d72-8f98602e6dfc # Tour Boekentoren
+sortOrder: 1

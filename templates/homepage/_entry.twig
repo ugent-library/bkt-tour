@@ -1,0 +1,36 @@
+{% extends "_layout" %}
+
+{% set featureImage = {
+  mode: 'crop',
+  width: 400,
+  height: 250,
+  quality: 90
+} %}
+
+{% set startTourQuery = craft.entries()
+    .section('room') %}
+
+{% set startingRoomEntry = startTourQuery.nth(0) %}
+
+
+{% block content %}
+  <div class="row">
+    <div class="col-6">
+      <h1 class="text-4xl text-black font-display my-4">{{ entry.title }}</h1>
+
+      <p>{{ entry.bodyContent }}</p>
+
+      <p><a href="{{ startingRoomEntry.url }}" class="btn btn-primary btn-lg" tabindex="-1" role="button">{{ 'Start tour'|t }} &raquo;</a></p>
+    </div>
+
+    <div class="col-6">
+    {% if entry.mainImage|length %}
+      {% for image in entry.mainImage.all() %}
+        <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+      {% endfor %}
+    {% endif %}
+
+    </div>
+  </div>
+{% endblock %}
+

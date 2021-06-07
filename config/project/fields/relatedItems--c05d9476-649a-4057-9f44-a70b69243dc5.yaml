@@ -1,0 +1,24 @@
+contentColumnType: string
+fieldGroup: 8f033c66-fa69-45dd-b77d-4736d7c23427 # Common
+handle: relatedItems
+instructions: ''
+name: 'Related items'
+searchable: false
+settings:
+  allowSelfRelations: false
+  limit: ''
+  localizeRelations: false
+  selectionLabel: ''
+  showSiteMenu: false
+  source: null
+  sources:
+    - 'section:dcb67b5b-92b0-4392-8a32-b86ac0933210' # Architect
+    - 'section:a714212b-4fb5-48a9-8d6d-fa534a520225' # Event
+    - 'section:203dcc8a-5f3f-498b-85ed-cbd75b887616' # Librarian
+    - 'section:bc35cc36-2b9e-4017-ab80-4d631381e12e' # Art
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: null
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Entries

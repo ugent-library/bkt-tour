@@ -1,0 +1,44 @@
+{% extends "_layout" %}
+
+{% set featureImage = {
+  mode: 'crop',
+  width: 500,
+  height: 300,
+  quality: 90
+} %}
+
+
+{% set librariansQuery = craft.entries()
+    .section('librarian')
+%}
+
+{% set librarians = librariansQuery.all() %}
+
+
+{% block content %}
+
+<div clas="container">
+    <div class="row mb-2">
+        <div class="col-12">
+            <h1 class="text-4xl text-black font-display my-4">{{ entry.title }}</h1>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+
+        <div class="d-flex align-items-start flex-row">
+            {% for librarian in librarians %}
+            <div class="librarian me-3">
+                {% if librarian.mainImage|length %}
+                {% set image = librarian.mainImage.first() %}
+                    <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+                {% endif %}
+                <h3><a href="{{ librarian.url }}">{{ librarian.title }}</a></h3>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

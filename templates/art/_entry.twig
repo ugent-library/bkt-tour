@@ -1,0 +1,32 @@
+{% extends "_layout" %}
+
+{% set featureImage = {
+  mode: 'crop',
+  width: 300,
+  height: 200,
+  quality: 90
+} %}
+
+{% block content %}
+  <div clas="container">
+    <div class="row">
+
+      <p>{{ 'art'|t }}</p>
+
+      <h1 class="text-4xl text-black font-display my-4">{{ entry.title }}</h1>
+
+      {% if entry.mainImage|length %}
+        <ul class="list-unstyled">
+        {% for image in entry.mainImage.all() %}
+            <li class="list-inline-item">
+              <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+            </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+
+      <p>{{ entry.bodyContent }}</p>
+
+    </div>
+</div>
+{% endblock %}

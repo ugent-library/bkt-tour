@@ -1,0 +1,23 @@
+dateModified: 1623073715
+email:
+  fromEmail: matthias.vandermaesen@ugent.be
+  fromName: 'Toer Boekentoren'
+  transportType: craft\mail\transportadapters\Sendmail
+plugins:
+  redactor:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.3.0
+system:
+  edition: pro
+  live: true
+  name: 'Tour Boekentoren'
+  retryDuration: null
+  schemaVersion: 3.6.8
+  timeZone: Europe/Brussels
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: null
+  photoVolumeUid: null
+  requireEmailVerification: true

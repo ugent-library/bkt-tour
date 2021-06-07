@@ -1,0 +1,6 @@
+siteUid: 81d10473-13e6-46a6-acd3-0fd9c7ab3729 # English
+sortOrder: 4
+template: art/_index
+uriParts:
+  - art
+uriPattern: art

@@ -1,0 +1,6 @@
+siteUid: 81d10473-13e6-46a6-acd3-0fd9c7ab3729 # English
+sortOrder: 3
+template: architect/_index
+uriParts:
+  - architects
+uriPattern: architects

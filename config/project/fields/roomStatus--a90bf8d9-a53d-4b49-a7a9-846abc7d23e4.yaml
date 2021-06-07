@@ -1,0 +1,45 @@
+contentColumnType: string
+fieldGroup: 8f033c66-fa69-45dd-b77d-4736d7c23427 # Common
+handle: roomStatus
+instructions: ''
+name: Status
+searchable: false
+settings:
+  optgroups: true
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - Accessible
+        -
+          - value
+          - accessible
+        -
+          - default
+          - ''
+    -
+      __assoc__:
+        -
+          - label
+          - Semi-accessible
+        -
+          - value
+          - semiAccessible
+        -
+          - default
+          - ''
+    -
+      __assoc__:
+        -
+          - label
+          - 'Not accessible'
+        -
+          - value
+          - notAccessible
+        -
+          - default
+          - ''
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Dropdown

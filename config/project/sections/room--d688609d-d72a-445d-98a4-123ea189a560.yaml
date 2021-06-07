@@ -1,0 +1,19 @@
+enableVersioning: true
+handle: room
+name: Room
+propagationMethod: siteGroup
+siteSettings:
+  4a80df2d-c2b9-46bf-94f7-eecc714b2b62: # Nederlands
+    enabledByDefault: true
+    hasUrls: true
+    template: room/_entry
+    uriFormat: 'ruimte/{slug}'
+  81d10473-13e6-46a6-acd3-0fd9c7ab3729: # English
+    enabledByDefault: true
+    hasUrls: true
+    template: room/_entry
+    uriFormat: 'room/{slug}'
+structure:
+  maxLevels: 3
+  uid: c31e7938-5660-4199-b31e-87749bad6412
+type: structure

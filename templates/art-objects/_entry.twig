@@ -1,0 +1,44 @@
+{% extends "_layout" %}
+
+{% set featureImage = {
+  mode: 'crop',
+  width: 500,
+  height: 300,
+  quality: 90
+} %}
+
+
+{% set objectsQuery = craft.entries()
+    .section('object')
+%}
+
+{% set objects = objectsQuery.all() %}
+
+
+{% block content %}
+
+<div clas="container">
+    <div class="row mb-2">
+        <div class="col-12">
+            <h1 class="text-4xl text-black font-display my-4">{{ entry.title }}</h1>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+
+        <div class="d-flex align-items-start flex-row">
+            {% for object in objects %}
+            <div class="object me-3">
+                {% if object.mainImage|length %}
+                {% set image = object.mainImage.first() %}
+                    <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+                {% endif %}
+                <h3><a href="{{ object.url }}">{{ object.title }}</a></h3>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

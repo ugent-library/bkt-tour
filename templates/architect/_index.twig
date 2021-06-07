@@ -1,0 +1,24 @@
+{% extends "_layout" %}
+
+{% set routes = craft.app.routes.getProjectConfigRoutes|keys %}
+{% set activeRoute = craft.request.getLastSegment() %}
+
+{% set currPhone = {type: 'test'} %}
+{% set phoneNumbers = {} %}
+{% set phoneNumbers = phoneNumbers|merge({ (currPhone.type) : currPhone.type }) %}
+
+
+{% set sites = craft.app.getSites().getGroupById(currentSite.groupId).getSites() %}
+
+{% block content %}
+{{ 'Architects'|t }}
+
+{{ phoneNumbers['test'] }}
+
+
+
+    {{ craft.app.language }}
+
+    <pre>{{ dump(sites) }}</pre>
+
+{% endblock %}

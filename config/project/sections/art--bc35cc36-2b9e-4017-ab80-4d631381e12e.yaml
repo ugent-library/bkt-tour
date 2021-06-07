@@ -1,0 +1,19 @@
+enableVersioning: true
+handle: art
+name: Art
+propagationMethod: siteGroup
+siteSettings:
+  4a80df2d-c2b9-46bf-94f7-eecc714b2b62: # Nederlands
+    enabledByDefault: true
+    hasUrls: true
+    template: art/_entry
+    uriFormat: 'kunst/{slug}'
+  81d10473-13e6-46a6-acd3-0fd9c7ab3729: # English
+    enabledByDefault: true
+    hasUrls: true
+    template: art/_entry
+    uriFormat: 'art/{slug}'
+structure:
+  maxLevels: null
+  uid: 332b8f52-ace7-40fd-b726-b80ca7c801a6
+type: structure
