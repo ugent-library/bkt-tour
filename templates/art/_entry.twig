@@ -21,10 +21,12 @@
       <div class="col-6">
         {% if entry.mainImage|length %}
           {% set image = entry.mainImage.first() %}
-          <figure class="figure">
+          {% if image is defined %}
+          <figure class="figure mb-3 mt-3">
             <img src="{{ image.getUrl(featureImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
             <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
           </figure>
+          {% endif %}
         {% endif %}
       </div>
 
