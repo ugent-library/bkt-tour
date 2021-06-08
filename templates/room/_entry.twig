@@ -92,14 +92,14 @@
 
     {% if not entry.HistoricalReferenceTitle is empty
           or not entry.HistoricalReferenceDating is empty
-          or not entry.historicalreferenceimage is empty
+          or not entry.Historicalreferenceimage is empty
           or not entry.HistoricalReferenceBodyContent is empty
     %}
     <div class="row bg-dark text-light mb-2">
       <h2>{{ 'Historical reference'|t }} {{ entry.HistoricalReferenceDating }}</h2>
 
       <div class="col-3">
-        {% set image = entry.historicalReferenceImage.first() %}
+        {% set image = entry.HistoricalReferenceImage.first() %}
         <figure class="figure mb-3 mt-3">
           <img src="{{ image.getUrl(galleryImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
           <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
