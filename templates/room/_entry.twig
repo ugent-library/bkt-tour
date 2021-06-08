@@ -100,10 +100,12 @@
 
       <div class="col-3">
         {% set image = entry.HistoricalReferenceImage.first() %}
+        {% if image is defined %}
         <figure class="figure mb-3 mt-3">
           <img src="{{ image.getUrl(galleryImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
           <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
         </figure>
+        {% endif %}
       </div>
 
       <div class="col-9">
