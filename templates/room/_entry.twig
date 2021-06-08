@@ -42,9 +42,12 @@
   <div clas="container">
     <div class="row mb-2">
       <div class="col-6">
-        {% if entry.mainImage|length %}
-          {% set image = entry.mainImage.first() %}
-          <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+        {% set image = entry.mainImage.first() %}
+        {% if not image is null %}
+        <figure class="figure">
+          <img src="{{ image.getUrl(featureImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
+          <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
+        </figure>
         {% endif %}
       </div>
 
@@ -100,7 +103,7 @@
 
       <div class="col-3">
         {% set image = entry.HistoricalReferenceImage.first() %}
-        {% if image is defined %}
+        {% if not image is null %}
         <figure class="figure mb-3 mt-3">
           <img src="{{ image.getUrl(galleryImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
           <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
