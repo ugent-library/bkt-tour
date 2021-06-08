@@ -9,23 +9,24 @@
 
 {% block content %}
   <div clas="container">
-    <div class="row">
+     <div class="row mb-2">
+      <div class="col-6">
+        <p>{{ 'librarians'|t }}</p>
 
-      <p>{{ 'librarians'|t }}</p>
+        <h1 class="text-4xl text-black font-display my-4">{{ entry.title }}</h1>
 
-      <h1 class="text-4xl text-black font-display my-4">{{ entry.title }}</h1>
+        <p>{{ entry.bodyContent }}</p>
+      </div>
 
-      {% if entry.mainImage|length %}
-        <ul class="list-unstyled">
-        {% for image in entry.mainImage.all() %}
-            <li class="list-inline-item">
-              <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
-            </li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-
-      <p>{{ entry.bodyContent }}</p>
+      <div class="col-6">
+        {% if entry.mainImage|length %}
+          {% set image = entry.mainImage.first() %}
+          <figure class="figure">
+            <img src="{{ image.getUrl(featureImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
+            <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
+          </figure>
+        {% endif %}
+      </div>
 
     </div>
 </div>

@@ -9,19 +9,7 @@
 
 {% block content %}
   <div clas="container">
-    <div class="row">
-      <div class="col-6">
-      {% if entry.mainImage|length %}
-        <ul class="list-unstyled">
-        {% for image in entry.mainImage.all() %}
-            <li class="list-inline-item">
-              <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
-            </li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-      </div>
-
+     <div class="row mb-2">
       <div class="col-6">
         <p>{{ 'architects'|t }}</p>
 
@@ -29,6 +17,17 @@
 
         <p>{{ entry.bodyContent }}</p>
       </div>
+
+      <div class="col-6">
+        {% if entry.mainImage|length %}
+          {% set image = entry.mainImage.first() %}
+          <figure class="figure">
+            <img src="{{ image.getUrl(featureImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
+            <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
+          </figure>
+        {% endif %}
+      </div>
+
     </div>
 </div>
 {% endblock %}

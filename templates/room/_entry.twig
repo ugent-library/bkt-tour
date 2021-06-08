@@ -7,6 +7,20 @@
   quality: 90
 } %}
 
+{% set galleryImage = {
+  mode: 'crop',
+  width: 450,
+  height: 280,
+  quality: 90
+} %}
+
+{% set relatedImage = {
+  mode: 'crop',
+  width: 450,
+  height: 280,
+  quality: 90
+} %}
+
 
 {% set nextSiblingQuery = craft.entries()
     .section('room')
@@ -29,13 +43,8 @@
     <div class="row mb-2">
       <div class="col-6">
         {% if entry.mainImage|length %}
-          <ul class="list-unstyled">
-          {% for image in entry.mainImage.all() %}
-              <li class="list-inline-item">
-                <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
-              </li>
-          {% endfor %}
-          </ul>
+          {% set image = entry.mainImage.first() %}
+          <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
         {% endif %}
       </div>
 
@@ -48,19 +57,20 @@
       </div>
     </div>
 
+    {% if entry.images|length %}
     <div class="row bg-light mb-2">
-      {% if entry.images|length %}
-      <div class="row">
-        <ul class="list-unstyled">
+      <div class="d-flex align-items-start flex-row">
         {% for image in entry.images.all() %}
-            <li class="list-inline-item">
-              <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
-            </li>
+        <div class="image me-3" style="width: 450px">
+          <figure class="figure mb-3 mt-3">
+            <img src="{{ image.getUrl(galleryImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
+            <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
+          </figure>
+        </div>
         {% endfor %}
-        </ul>
       </div>
-      {% endif %}
     </div>
+    {% endif %}
 
     {% if entry.relatedItems|length %}
     <div class="row">
@@ -70,14 +80,35 @@
       <ul class="list-unstyled">
         {% for item in entry.relatedItems %}
           {% if item.mainImage|length %}
-            {% for image in item.mainImage.all() %}
-                <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
-            {% endfor %}
+            {% set image = item.mainImage.first() %}
+            <img src="{{ image.getUrl(featureImage) }}" alt="{{ image.title }}" />
+            <p><small>{{ 'Architects'|t }}</small></p>
+            <p><a href="{{ item.url }}">{{ item.title }}</a></p>
           {% endif %}
-          <p><small>{{ 'Architects'|t }}</small></p>
-          <p><a href="{{ item.url }}">{{ item.title }}</a></p>
         {% endfor %}
       </ul>
+    </div>
+    {% endif %}
+
+    {% if not entry.HistoricalReferenceTitle is empty
+          or not entry.HistoricalReferenceDating is empty
+          or not entry.historicalreferenceimage is empty
+          or not entry.HistoricalReferenceBodyContent is empty
+    %}
+    <div class="row bg-dark text-light mb-2">
+      <h2>{{ 'Historical reference'|t }} {{ entry.HistoricalReferenceDating }}</h2>
+
+      <div class="col-3">
+        {% set image = entry.historicalReferenceImage.first() %}
+        <figure class="figure mb-3 mt-3">
+          <img src="{{ image.getUrl(galleryImage) }}" class="figure-img img-fluid" alt="{{ image.title }}" />
+          <figcaption class="figure-caption">{{ image.bodyContent }}</figcaption>
+        </figure>
+      </div>
+
+      <div class="col-9">
+         {{ entry.HistoricalReferenceBodyContent }}
+      </div>
     </div>
     {% endif %}
 
